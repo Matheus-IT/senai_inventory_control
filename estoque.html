@@ -1,0 +1,54 @@
+<script>
+	let saldo
+	do {
+		saldo = parseInt(prompt("Informe o saldo inicial de peças"));
+		if (saldo < 0)
+			alert("Não é permitido saldo negativo");
+		else
+			document.write(`Saldo inicial: ${saldo} <br />`);	
+	} while(saldo < 0);
+	
+	let encerrar = "n";
+
+	while (encerrar === "n") {
+		let tipo = parseInt(prompt("Informe o tipo de transação (1=entrada ou 2=saída)"));
+		if (![1, 2].includes(tipo)) {
+			alert("Informe uma das opções disponíveis: (1=entrada ou 2=saída)");		
+			continue;
+		}
+
+		let quantidade = 0;
+		do {
+			quantidade = parseInt(prompt("Informe a quantidade de peças, por favor"));
+			if (quantidade === 0 && saldo > 0)
+				alert("A quantidade não pode ser 0");
+			if (quantidade < 0)
+				alert("A quantidade não pode ser negativa");
+		} while (!quantidade > 0);
+
+		switch (tipo) {
+			case 1:
+				saldo += quantidade;
+				document.write(`Entrada: ${quantidade} <br/>`);
+				break;
+			case 2:
+				if (saldo >= quantidade) {
+					saldo -= quantidade;
+					document.write(`Saída: ${quantidade} <br />`);
+				} else {
+					document.write("Saldo insuficiente <br />");
+					alert("Saldo insuficiente");
+				}
+		}
+		
+		document.write(`Saldo de peças: ${saldo} <br />`);
+		while (true) {
+			encerrar = prompt("Deseja encerrar? (s/n)");
+			if (["s", "n"].includes(encerrar))
+				break;
+			else
+				alert("Escolha uma das opções disponíveis: (s/n)");
+		}
+	}
+	document.write("Sistema encerrado <br />");
+</script>
